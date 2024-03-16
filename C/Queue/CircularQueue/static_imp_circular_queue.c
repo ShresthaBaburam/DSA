@@ -1,11 +1,12 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-#define MAX_SIZE 100
+#define MAX_SIZE 5
 
 int queue[MAX_SIZE];
 int front = -1;
 int rear = -1;
+
 
 bool isEmpty() {
     return front == -1;
@@ -20,13 +21,14 @@ bool isFull() {
 void enqueue(int value) {
     if (isFull()) {
         printf("Queue Overflow\n");
+    } else {
+        if (isEmpty()) {
+            front = 0;
+        }
+        rear = (rear + 1) % MAX_SIZE;
+        queue[rear] = value;
+        printf("Data Item '%d' Added to Queue.\n", value);
     }
-    if (isEmpty()) {
-        front = 0;
-    }
-    rear = rear + 1;
-    queue[rear] = value;
-    printf("Data Item '%d' Added to Queue.\n", value);
 }
 
 
@@ -36,7 +38,12 @@ int dequeue() {
         return -1;
     } else {
         int dequeuedValue = queue[front];
-        front = front + 1;
+        if (front == rear) {
+            front = -1;
+            rear = -1;
+        } else {
+            front = (front + 1) % MAX_SIZE;
+        }
         return dequeuedValue;
     }
 }
@@ -44,18 +51,17 @@ int dequeue() {
 
 void traverse() {
     if (isEmpty()) {
-        printf("Queue Underflow.\n");
+        printf("Queue is empty\n");
     } else {
-        printf("\nThe Element(s) in Queue(rear->front) is/are:\n");
-        int i = rear;
+        printf("Elements of the circular queue (front-> rear):");
+        int i = front;
         do {
-            printf("%d\t", queue[i]);
-            i = i - 1;
-        } while(i != front - 1);
+            printf("%d ", queue[i]);
+            i = (i + 1) % MAX_SIZE;
+        } while (i != (rear + 1) % MAX_SIZE);
         printf("\n");
     }
 }
-
 
 int peek(char *frontRear) {
     if (isEmpty()) {
@@ -69,6 +75,7 @@ int peek(char *frontRear) {
         }
     }
 }
+
 
 
 void displayMenu() {
@@ -97,7 +104,7 @@ int main() {
             case 2:
                 int dequeuedValue = dequeue();
                 if (dequeuedValue != -1){
-                    printf("Data Item '%d' is popped from Stack", dequeuedValue);
+                    printf("Data Item '%d' is Dequeued from Queue", dequeuedValue);
                 }
                 break;
             case 3:
