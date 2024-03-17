@@ -83,7 +83,7 @@ int main() {
     int choice, pushValue;
     while (1) {
         displayMenu();
-
+        scanf("%d", &choice);
         switch (choice) {
             case 1:
                 printf("Enter the value to push: ");
@@ -105,6 +105,9 @@ int main() {
                     printf("Data Item on the Top of Stack: %d\n", peekValue);
                 }
                 break;
+            case 5:
+                printf("Exting....");
+                exit(1);
             default:
                 printf("Invalid choice\n");
         }
