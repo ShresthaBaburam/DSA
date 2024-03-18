@@ -7,6 +7,7 @@ struct Node {
     struct Node* next;
 };
 
+
 struct Node* createNode(int data) {
     struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
     if (newNode == NULL) {
@@ -19,6 +20,7 @@ struct Node* createNode(int data) {
     return newNode;
 }
 
+
 void insertAtBegin(struct Node** head, int data) {
     struct Node* newNode = createNode(data);
     if (*head != NULL) {
@@ -27,6 +29,7 @@ void insertAtBegin(struct Node** head, int data) {
     newNode->next = *head;
     *head = newNode;
 }
+
 
 void insertAtPosition(struct Node** head, int data, int position) {
     if (position < 0) {
@@ -61,6 +64,7 @@ void insertAtPosition(struct Node** head, int data, int position) {
     current->next = newNode;
 }
 
+
 void insertAtEnd(struct Node** head, int data) {
     struct Node* newNode = createNode(data);
     if (*head == NULL) {
@@ -74,6 +78,7 @@ void insertAtEnd(struct Node** head, int data) {
     current->next = newNode;
     newNode->previous = current;
 }
+
 
 int deleteFromBegin(struct Node** head) {
     if (*head == NULL) {
@@ -89,6 +94,7 @@ int deleteFromBegin(struct Node** head) {
     free(temp);
     return deletedValue;
 }
+
 
 int deleteFromPosition(struct Node** head, int position) {
     if (*head == NULL) {
@@ -123,6 +129,7 @@ int deleteFromPosition(struct Node** head, int position) {
     return deletedValue;
 }
 
+
 int deleteFromEnd(struct Node** head) {
     if (*head == NULL) {
         printf("List is Empty.\n");
@@ -142,6 +149,7 @@ int deleteFromEnd(struct Node** head) {
     return deletedValue;
 }
 
+
 void traverse(struct Node* head) {
     if (head == NULL) {
         printf("List is Empty.\n");
@@ -155,6 +163,21 @@ void traverse(struct Node* head) {
     printf("\n");
 }
 
+
+int search(struct Node* head, int value) {
+    struct Node* current = head;
+    int position = 0;
+    while (current != NULL) {
+        if (current->data == value) {
+            return position;
+        }
+        current = current->next;
+        position++;
+    }
+    return -1;
+}
+
+
 void displayMenu() {
     printf("\n");
     printf("1. Insert At Begin\n");
@@ -164,9 +187,11 @@ void displayMenu() {
     printf("5. Delete From Position\n");
     printf("6. Delete From End\n");
     printf("7. Traverse\n");
-    printf("8. Exit\n");
+    printf("8. Search\n");
+    printf("9. Exit\n");
     printf("Enter your choice: ");
 }
+
 
 int main() {
     int choice;
@@ -214,6 +239,17 @@ int main() {
                 traverse(head);
                 break;
             case 8:
+                int value;
+                printf("Enter Element to Search in Linked List: ");
+                scanf("%d", &value);
+                int position = search(head, value);
+                if (position != -1) {
+                    printf("Data Item '%d' Found at '%d' position of Linked List.\n", value, position);
+                } else {
+                    printf("Data Item '%d'  Not Found in Linked List.\n", value);
+                }
+                break;
+            case 9:
                 printf("Exiting.....\n");
                 exit(0);
             default:
