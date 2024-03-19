@@ -1,0 +1,6 @@
+{
+    "terminal.integrated.commandsToSkipShell": [
+        "code.runner: Run in terminal"
+    ],
+    "codesnap.realLineNumbers": false
+}
